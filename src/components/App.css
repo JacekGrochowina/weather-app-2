@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Kalam:400&display=swap&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab:400,600&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap&subset=latin-ext');
+
+:root {
+    --primaryColor: rgb(240, 107, 66);
+    --primaryColorLight: beige;
+}
+
+body {
+    background: linear-gradient(45deg,#2193b0, #6dd5ed);
+    background-image: url('../bg.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 0 15px;
+}
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-bar {
+    background: #363434;
+}
+
+.search-bar .form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-bar .form .logo {
+    font-family: 'Kalam', cursive;
+    padding: 15px;
+}
+
+.search-bar .form .logo h1 {
+    font-family: 'Kalam', cursive;
+    font-weight: 400;
+    color: beige;
+}
+
+.search-bar .form .logo h1 span {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 600;
+    font-size: 1.10em;
+    color: var(--primaryColor);
+    padding-left: 4px;
+}
+
+.search-bar .form form {
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: flex-end;
+    padding: 19px 0;
+}
+
+.search-bar .form form input,
+.search-bar .form form button {
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.search-bar .form form input {
+    flex-grow: 1;
+
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    color:  var(--primaryColor);
+    letter-spacing: 2px;
+    border: 2px solid transparent;
+    box-shadow: 0 0 0 var(--primaryColor);
+
+    transition: box-shadow .1s, border .2s;
+}
+
+.search-bar .form form input:focus {
+    border: 2px solid var(--primaryColor);
+    box-shadow: 0 0 5px var(--primaryColor);
+}
+
+.main-content {
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.main-content .result h1 {
+    font-family: 'Roboto Slab', serif;
+    font-weight: 600;
+    color: #191919;
+    padding-bottom: 1.5rem;
+}
+
+.main-content .result ul {
+    list-style-type: none;
+    padding-left: 1.5rem;
+}
+
+.main-content .result ul li {
+    color: #202020;
+}
+
+.main-content .result ul li span {
+    padding-left: .5rem;
+    font-family: 'Roboto Slab', serif;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: #191919;
+    letter-spacing: 1px;
+}
