@@ -3,6 +3,9 @@ import Form from './Form';
 import Result from './Result';
 import './App.css';
 
+// Key to API
+const APIKey = 'ab90379ee46415c54a6743c00d44ca2b';
+
 class App extends Component {
 
   state = {
@@ -14,7 +17,7 @@ class App extends Component {
     temp: '',
     pressure: '',
     wind: '',
-    err: '',
+    err: false,
   }
 
   handleInputChange = (e) => {
@@ -23,35 +26,65 @@ class App extends Component {
     })
   }
 
-  handleCitySubmit = (e) => {
-    e.preventDefault();
-    console.log("potwierdzony formularz");
-    console.log(this.state.value);
+  componentDidUpdate(prevProps, prevState) {
 
-    const API = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=ab90379ee46415c54a6743c00d44ca2b&units=metric`;
+    if (this.state.value.length === 0) return
+    if (prevState.value !== this.state.value) {
+      const API = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.value}&APPID=${APIKey}&units=metric`;
 
 
-    fetch(API)
-      .then(response => {
-        if (response.ok) {
-          return response;
+      fetch(API)
+        .then(response => {
+          if (response.ok) {
+            return response;
+          }
+          throw Error("Nie udało się")
+        })
+        .then(response => response.json())
+        .then(data => {
+          const time = new Date().toLocaleString()
+          this.setState(prevState => ({
+            err: false,
+            date: time,
+            city: '',
+            sunrise: data.sys.sunrise,
+            sunset: data.sys.sunset,
+            temp: data.main.temp,
+            pressure: data.main.pressure,
+            wind: data.wind.speed,
+            city: prevState.value,
+          }))
+        })
+        .catch(err => {
+          console.log(err)
+          this.setState(prevState => {
+            return {
+              err: true,
+              city: prevState.value,
+            }
+          })
         }
-        throw Error("Nie udało się")
-      })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(err => console.log(err))
+        )
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <Form
-          value={this.state.value}
-          change={this.handleInputChange}
-          submit={this.handleCitySubmit}
-        />
-        <Result />
+        <div className="search-bar">
+          <div className="container">
+            <Form
+              value={this.state.value}
+              change={this.handleInputChange}
+            />
+          </div>
+        </div>
+
+        <div className="main-content">
+          <div className="container">
+            <Result weather={this.state} />
+          </div>
+        </div>
       </div>
     );
   }
